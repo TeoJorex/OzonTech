@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package greet;
+
+import "google/protobuf/timestamp.proto";
+
+// The greeting service definition.
+service ProductService {
+  // Sends a greeting
+  rpc AddProduct (AddProductRequest) returns (AddProductResponse);
+  rpc GetProductById (GetProductByIdRequest) returns (GetProductByIdResponse);
+  rpc UpdatePricetById (UpdatePricetByIdRequest) returns (UpdatePricetByIdResponse);
+  rpc GetProductsByFilters (GetProductsByFiltersRequest) returns (GetProductsByFiltersResponse);
+}
+
+enum PRODUCT_TYPE_GENERAL
+{
+    PRODUCT_TYPE_UNSPECIFIED = 0;
+    General = 1;
+    HouseholdChemical = 2;
+    Electronic = 3;
+    Grocerie = 4;
+}
+
+message AddProductRequest 
+{
+    string Name = 1;
+    double Price = 2;
+    double Weight = 3;
+    PRODUCT_TYPE_GENERAL ProductType = 4;
+    google.protobuf.Timestamp CreatedDate = 5;
+    int32 WarehouseId = 6;
+}
+
+message AddProductResponse
+{
+    int64 Id = 1;
+}
+
+message GetProductByIdRequest 
+{
+    int64 Id = 1;
+}
+
+message GetProductByIdResponse
+{
+    string Name = 1;
+    double Price = 2;
+    double Weight = 3;
+    PRODUCT_TYPE_GENERAL ProductType = 4;
+    google.protobuf.Timestamp CreatedDate = 5;
+    int32 WarehouseId = 6;
+}
+
+message UpdatePricetByIdRequest
+{
+    int64 Id = 1;
+    int32 NewPrice = 2;
+}
+
+message UpdatePricetByIdResponse
+{
+    string Message = 1;
+}
+
+message GetProductsByFiltersRequest
+{
+    oneof productTypeOption {
+        bool productTypeNull = 1;   
+        PRODUCT_TYPE_GENERAL ProductType = 2;
+    }
+    optional google.protobuf.Timestamp DateTime = 3;
+    optional int32 warehouseId = 4;
+    int32 PageNumber = 5;
+    int32 PageSize = 6;
+}
+
+message GetProductsByFiltersResponse
+{
+    repeated Product Products = 1;
+}
+
+message Product 
+{
+    string Name = 1;
+    double Price = 2;
+    double Weight = 3;
+    PRODUCT_TYPE_GENERAL ProductType = 4;
+    google.protobuf.Timestamp CreatedDate = 5;
+    int32 WarehouseId = 6;
+}
+
