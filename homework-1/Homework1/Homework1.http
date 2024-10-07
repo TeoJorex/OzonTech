@@ -1,0 +1,6 @@
+@Homework1_HostAddress = http://localhost:5000
+
+GET {{Homework1_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
